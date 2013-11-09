@@ -1,10 +1,11 @@
 <resources>
 
     <string name="app_name">TVR Decoder</string>
-    <string name="hello_world">Hello World!</string>
     
     <string name="input_tvr">TVR (10 digits)</string>
     <string name="input_tsi">TSI (4 digits)</string>
     <string name="button_decode">Decode</string>
+    
+    <string name="about_message">The TVR and TSI codes contain status information from EMV payment transactions.</string>
 
 </resources>
