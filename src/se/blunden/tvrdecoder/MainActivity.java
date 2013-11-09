@@ -75,8 +75,11 @@ public class MainActivity extends Activity {
 		String formattedString = BulletListBuilder.getBulletList("TVR Results", tvrResult) + "\n" 
 				+ BulletListBuilder.getBulletList("TSI Results", tsiResult);
 		
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp.setMargins(0, 20, 0, 0);
+		
 		resultView.setText(formattedString);
-		resultView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		resultView.setLayoutParams(lp);
 		
         // Create a generic swipe-to-dismiss touch listener.
         resultView.setOnTouchListener(new SwipeDismissTouchListener(
@@ -95,19 +98,15 @@ public class MainActivity extends Activity {
                     }
                 }));
         
+		/*resultView.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Log.d(TAG, "touch detected!");
+				return false;
+			}
+		});*/
         layout.addView(resultView);
-		
-		//-----
-		/*View layout = findViewById(R.id.now_layout);
-		
-		TextView resultView = new CardTextView(new ContextThemeWrapper(this, R.style.nowCardStyle));
-		String formattedString = BulletListBuilder.getBulletList("TVR Results", tvrResult) + "\n" 
-				+ BulletListBuilder.getBulletList("TSI Results", tsiResult);
-		
-		resultView.setText(formattedString);
-		resultView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		
-		((LinearLayout) layout).addView(resultView);*/
 	}
 	
 	private void prepareAboutDialog() {
