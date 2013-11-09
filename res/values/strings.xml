@@ -7,5 +7,10 @@
     <string name="button_decode">Decode</string>
     
     <string name="about_message">The TVR and TSI codes contain status information from EMV payment transactions.</string>
+    
+    <string name="ok">OK</string>
+	<string name="cancel">Cancel</string>
+	<string name="menu_about">About</string>
+    
 
 </resources>

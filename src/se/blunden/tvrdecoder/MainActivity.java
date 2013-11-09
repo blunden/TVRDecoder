@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import se.blunden.tvrdecoder.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +21,11 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private static final String TAG = "TVRDecoder";
+	
+	private static final int ABOUT_ID = Menu.FIRST;
+	
+	private static String aboutMessage = null;
+	private AlertDialog mAboutDialog;
 	
 	private Decoder decoder;
 	private EditText tvrInputField;
@@ -29,6 +39,8 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		prepareAboutDialog();
 		
 		decoder = new Decoder();
 		
@@ -55,7 +67,7 @@ public class MainActivity extends Activity {
         
 	}
 	
-	public void displayOutput() {
+	private void displayOutput() {
 
 		final LinearLayout layout = (LinearLayout) findViewById(R.id.now_layout);
 		
@@ -97,5 +109,40 @@ public class MainActivity extends Activity {
 		
 		((LinearLayout) layout).addView(resultView);*/
 	}
+	
+	private void prepareAboutDialog() {
+		if (aboutMessage == null) {
+			aboutMessage = getString(R.string.about_message);
+		}
+		
+		mAboutDialog = new AlertDialog.Builder(this)
+		.setTitle(R.string.menu_about)
+		.setMessage(aboutMessage)
+		.setNeutralButton(R.string.ok, new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		})
+		.create();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, ABOUT_ID, 0, R.string.menu_about).setIcon(android.R.drawable.ic_menu_info_details).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		
+		return true;
+	}
 
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch(item.getItemId()) {
+		case ABOUT_ID:
+			mAboutDialog.show();
+			return true;
+		}
+
+		return super.onMenuItemSelected(featureId, item);
+	}
 }
