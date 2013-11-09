@@ -3,9 +3,6 @@ package se.blunden.tvrdecoder;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
 /**

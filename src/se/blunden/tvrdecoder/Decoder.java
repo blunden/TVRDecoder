@@ -2,10 +2,7 @@ package se.blunden.tvrdecoder;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 public class Decoder {
-	private static final String TAG = "TVRDecoder";
 	
 	private String[] tvr;
 	private String[] tsi;
