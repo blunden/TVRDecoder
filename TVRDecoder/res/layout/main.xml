@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:id="@+id/now_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#e3e3e3"
+        android:orientation="vertical"
+		android:paddingTop="10dip"
+		android:paddingLeft="10dip"
+		android:paddingRight="10dip"
+		android:clipToPadding="false" >
+
+        <LinearLayout 
+            android:background="@drawable/card_background"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip" >
+        
+	        <EditText 
+	            android:id="@+id/input_tvr"
+	            android:inputType="number"
+	            android:maxLength="10"
+	            android:textColor="#707070"
+	            android:hint="@string/input_tvr"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            tools:context=".MainActivity" />
+	        
+	        <EditText 
+	            android:id="@+id/input_tsi"
+	            android:inputType="text"
+	            android:digits="abcdef012345789"
+	            android:maxLength="4"
+	            android:textColor="#707070"
+	            android:hint="@string/input_tsi"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            tools:context=".MainActivity" />
+	        
+	        <Button
+        		android:id="@+id/button_decode"
+        		android:text="@string/button_decode"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content" /> 
+        </LinearLayout>
+         
+    </LinearLayout>
+
+</ScrollView>
