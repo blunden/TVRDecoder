@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light" />
 
     <style name="nowCardStyle" parent="android:Widget.TextView">
-        <item name="android:background">@drawable/card_background</item>
+        <item name="android:background">@drawable/bg_card</item>
         <item name="android:padding">10dip</item>
         <item name="android:textColor">#707070</item>
     </style>
