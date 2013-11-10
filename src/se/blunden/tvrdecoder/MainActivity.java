@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
 	private static final String TAG = "TVRDecoder";
 	
 	private static final int ABOUT_ID = Menu.FIRST;
+	private static final int CLEAR_ALL_ID = Menu.FIRST + 1;
 	
 	private static String aboutMessage = null;
 	private AlertDialog mAboutDialog;
@@ -141,6 +142,24 @@ public class MainActivity extends Activity {
 		.create();
 	}
 	
+	private void clearAllCards() {
+		ViewGroup group = (ViewGroup) findViewById(R.id.now_layout);
+		for (int i = 0, count = group.getChildCount(); i < count; i++) {
+	        View view = group.getChildAt(i);
+	        if (view instanceof CardTextView) {
+	        	Log.d(TAG, "clearAllCards i: " + i);
+	        	group.removeView(view);
+	        }
+	    }
+		// The loop above does not remove the first card if 3 or more have been added
+		// For now, remove the card at index 2 (index 0 and 1 are the input fields) if it is indeed a card
+		View view = group.getChildAt(2);
+		if(view instanceof CardTextView) {
+			Log.d(TAG, "clearAllCards removing remaining index 2");
+        	group.removeView(view);
+		}
+	}
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 	    super.onSaveInstanceState(outState);
@@ -172,6 +191,7 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, ABOUT_ID, 0, R.string.menu_about).setIcon(android.R.drawable.ic_menu_info_details).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		menu.add(0, CLEAR_ALL_ID, 0, R.string.menu_clear_all).setIcon(android.R.drawable.ic_menu_close_clear_cancel).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		
 		return true;
 	}
@@ -181,6 +201,10 @@ public class MainActivity extends Activity {
 		switch(item.getItemId()) {
 		case ABOUT_ID:
 			mAboutDialog.show();
+			return true;
+		
+		case CLEAR_ALL_ID:
+			clearAllCards();
 			return true;
 		}
 
