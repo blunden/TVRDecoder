@@ -90,8 +90,6 @@ public class MainActivity extends Activity {
 		final LinearLayout layout = (LinearLayout) findViewById(R.id.now_layout);
 		
 		final TextView resultView = new CardTextView(new ContextThemeWrapper(this, R.style.nowCardStyle));
-		/*String formattedString = BulletListBuilder.getBulletList("TVR Results", tvrResult) + "\n" 
-				+ BulletListBuilder.getBulletList("TSI Results", tsiResult);*/
 		
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		lp.setMargins(0, 20, 0, 0);
