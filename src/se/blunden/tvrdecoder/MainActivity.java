@@ -145,6 +145,33 @@ public class MainActivity extends Activity {
 	}
 	
 	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+	    super.onSaveInstanceState(outState);
+	    // Store all formatted card strings to be able to restore on configuration change
+	    ArrayList<String> savedStrings = new ArrayList<String>();
+	    ViewGroup group = (ViewGroup) findViewById(R.id.now_layout);
+	    for (int i = 0, count = group.getChildCount(); i < count; ++i) {
+	        View view = group.getChildAt(i);
+	        if (view instanceof CardTextView) {
+	            savedStrings.add(((CardTextView)view).getText().toString());
+	        }
+	    }
+	    outState.putStringArrayList("savedCardText", savedStrings);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		// Retrieve saved strings and add the cards back
+		ArrayList<String> savedStrings = savedInstanceState.getStringArrayList("savedCardText");
+		if(!(savedStrings == null)) {
+	    	for(String text : savedStrings) {
+	    		displayOutput(text);
+	    	}
+	    }
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, ABOUT_ID, 0, R.string.menu_about).setIcon(android.R.drawable.ic_menu_info_details).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
