@@ -62,6 +62,9 @@ public class MainActivity extends Activity {
                 	Log.d(TAG, "input tvr: " + tvr);
                 	Log.d(TAG, "input tsi: " + tsi);
                 	
+                	tvrInputField.setText("");
+                	tsiInputField.setText("");
+                	
                 	displayOutput(buildResultString());
                 }
             });
