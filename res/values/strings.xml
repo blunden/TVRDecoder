@@ -2,8 +2,8 @@
 
     <string name="app_name">TVR Decoder</string>
     
-    <string name="input_tvr">TVR (10 digits)</string>
-    <string name="input_tsi">TSI (4 digits)</string>
+    <string name="input_tvr">Enter TVR (10 digits)</string>
+    <string name="input_tsi">Enter TSI (4 digits)</string>
     <string name="button_decode">Decode</string>
     
     <string name="about_message">The TVR and TSI codes contain status information from EMV payment transactions.\n\nThe codes can often be found on your receipts.</string>

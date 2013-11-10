@@ -15,8 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 	private Decoder decoder;
 	private EditText tvrInputField;
 	private EditText tsiInputField;
-	private Button decodeButton;
+	private ImageButton decodeButton;
 	
 	private ArrayList<String> tvrResult;
 	private ArrayList<String> tsiResult;
@@ -48,11 +48,10 @@ public class MainActivity extends Activity {
         tvrInputField = (EditText) findViewById(R.id.input_tvr);
         tsiInputField = (EditText) findViewById(R.id.input_tsi);
 
-        decodeButton = (Button) findViewById(R.id.button_decode);
+        decodeButton = (ImageButton) findViewById(R.id.button_decode);
         decodeButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                	// TODO: Display error to the user if invalid
-                	// ie. check the return value and create alert dialog
+                	// Valid input characters enforced by input_tvr and input_tsi
                 	String tvr = tvrInputField.getText().toString();
                 	String tsi = tsiInputField.getText().toString();
                 	
