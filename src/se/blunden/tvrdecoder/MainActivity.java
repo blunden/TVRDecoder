@@ -14,6 +14,7 @@ import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -61,19 +62,36 @@ public class MainActivity extends Activity {
                 	Log.d(TAG, "input tvr: " + tvr);
                 	Log.d(TAG, "input tsi: " + tsi);
                 	
-                	displayOutput();
+                	displayOutput(buildResultString());
                 }
             });
         
 	}
 	
-	private void displayOutput() {
-
+	private String buildResultString() {
+		String formattedString = "";
+		if(!tvrResult.isEmpty()) {
+			formattedString = BulletListBuilder.getBulletList("TVR Results", tvrResult);
+		}
+		if(!tsiResult.isEmpty()) {
+			if(!tvrResult.isEmpty()) {
+				formattedString += "\n";
+			}
+			formattedString += BulletListBuilder.getBulletList("TSI Results", tsiResult);
+		}
+		return formattedString;
+	}
+	
+	private void displayOutput(String formattedString) {
+		if(formattedString.equals("")) {
+			Log.d(TAG, "displayOutput received empty string. No output shown.");
+			return;
+		}
 		final LinearLayout layout = (LinearLayout) findViewById(R.id.now_layout);
 		
 		final TextView resultView = new CardTextView(new ContextThemeWrapper(this, R.style.nowCardStyle));
-		String formattedString = BulletListBuilder.getBulletList("TVR Results", tvrResult) + "\n" 
-				+ BulletListBuilder.getBulletList("TSI Results", tsiResult);
+		/*String formattedString = BulletListBuilder.getBulletList("TVR Results", tvrResult) + "\n" 
+				+ BulletListBuilder.getBulletList("TSI Results", tsiResult);*/
 		
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		lp.setMargins(0, 20, 0, 0);

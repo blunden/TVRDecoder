@@ -24,12 +24,12 @@ public class Decoder {
 				output.add(decoded);
 			}
 		}
-		if (output.size() > 0) {
+		//if (output.size() > 0) {
 			return output;
-		} 
-		else {
-			return null;
-		}
+		//} 
+		//else {
+			//return null;
+		//}
 	}
 	
 	public ArrayList<String> decodeTSI(String input_tsi) {
@@ -42,12 +42,12 @@ public class Decoder {
 				output.add(decoded);
 			}
 		}
-		if (output.size() > 0) {
+		//if (output.size() > 0) {
 			return output;
-		} 
-		else {
-			return null;
-		}
+		//} 
+		//else {
+		//	return null;
+		//}
 	}
 	
 	private String parseTVRDigit(int i, String digit) {
