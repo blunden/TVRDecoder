@@ -117,14 +117,6 @@ public class MainActivity extends Activity {
                     }
                 }));
         
-		/*resultView.setOnTouchListener(new View.OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				Log.d(TAG, "touch detected!");
-				return false;
-			}
-		});*/
         layout.addView(resultView);
 	}
 	
