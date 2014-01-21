@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 		
 		// Specify layout parameters to be applied
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		lp.setMargins(0, 19, 0, 0);
+		lp.setMargins(0, 20, 0, 0);
 		
 		card.setTvrHeaderText("TVR Results");
 		card.setTsiHeaderText("TSI Results");
