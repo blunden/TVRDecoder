@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private static final String TAG = "TVRDecoder";
@@ -33,9 +31,6 @@ public class MainActivity extends Activity {
 	private EditText tvrInputField;
 	private EditText tsiInputField;
 	private ImageButton decodeButton;
-	
-	private ArrayList<String> tvrResult;
-	private ArrayList<String> tsiResult;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,53 +51,42 @@ public class MainActivity extends Activity {
                 	String tvr = tvrInputField.getText().toString();
                 	String tsi = tsiInputField.getText().toString();
                 	
-                	tvrResult = decoder.decodeTVR(tvr);
-                	tsiResult = decoder.decodeTSI(tsi);
-                	
                 	Log.d(TAG, "input tvr: " + tvr);
                 	Log.d(TAG, "input tsi: " + tsi);
+                	
+                	ArrayList<String> tvrResult = decoder.decodeTVR(tvr);
+                	ArrayList<String> tsiResult = decoder.decodeTSI(tsi);
                 	
                 	tvrInputField.setText("");
                 	tsiInputField.setText("");
                 	
-                	displayOutput(buildResultString());
+                	displayOutput(BulletListBuilder.getBulletList(null, tvrResult), BulletListBuilder.getBulletList(null, tsiResult));
                 }
             });
         
 	}
 	
-	private String buildResultString() {
-		String formattedString = "";
-		if(!tvrResult.isEmpty()) {
-			formattedString = BulletListBuilder.getBulletList("TVR Results", tvrResult);
-		}
-		if(!tsiResult.isEmpty()) {
-			if(!tvrResult.isEmpty()) {
-				formattedString += "\n";
-			}
-			formattedString += BulletListBuilder.getBulletList("TSI Results", tsiResult);
-		}
-		return formattedString;
-	}
-	
-	private void displayOutput(String formattedString) {
-		if(formattedString.equals("")) {
-			Log.d(TAG, "displayOutput received empty string. No output shown.");
-			return;
-		}
+	private void displayOutput(String tvr, String tsi) {
+		// Get a reference to the layout where the card will be displayed
 		final LinearLayout layout = (LinearLayout) findViewById(R.id.now_layout);
 		
-		final TextView resultView = new CardTextView(new ContextThemeWrapper(this, R.style.nowCardStyle));
+		// Create the View for the card 
+		final CardView card = new CardView(this);
 		
+		// Specify layout parameters to be applied
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		lp.setMargins(0, 20, 0, 0);
+		lp.setMargins(0, 19, 0, 0);
 		
-		resultView.setText(formattedString);
-		resultView.setLayoutParams(lp);
+		card.setTvrHeaderText("TVR Results");
+		card.setTsiHeaderText("TSI Results");
+		
+		card.setTvrText(tvr);
+		card.setTsiText(tsi);
+		card.setLayoutParams(lp);
 		
         // Create a generic swipe-to-dismiss touch listener.
-        resultView.setOnTouchListener(new SwipeDismissTouchListener(
-                resultView,
+        card.setOnTouchListener(new SwipeDismissTouchListener(
+                card,
                 null,
                 new SwipeDismissTouchListener.DismissCallbacks() {
                     @Override
@@ -113,11 +97,11 @@ public class MainActivity extends Activity {
                     @Override
                     public void onDismiss(View view, Object token) {
                     	Log.d(TAG, "in onDismiss()");
-                    	layout.removeView(resultView);
+                    	layout.removeView(card);
                     }
                 }));
         
-        layout.addView(resultView);
+        layout.addView(card);
 	}
 	
 	private void prepareAboutDialog() {
@@ -141,7 +125,7 @@ public class MainActivity extends Activity {
 		ViewGroup group = (ViewGroup) findViewById(R.id.now_layout);
 		for (int i = 0, count = group.getChildCount(); i < count; i++) {
 	        View view = group.getChildAt(i);
-	        if (view instanceof CardTextView) {
+	        if (view instanceof CardView) {
 	        	Log.d(TAG, "clearAllCards i: " + i);
 	        	group.removeView(view);
 	        }
@@ -149,8 +133,8 @@ public class MainActivity extends Activity {
 		// The loop above does not remove the first card if 3 or more have been added
 		// For now, remove the card at index 2 (index 0 and 1 are the input fields) if it is indeed a card
 		View view = group.getChildAt(2);
-		if(view instanceof CardTextView) {
-			Log.d(TAG, "clearAllCards removing remaining index 2");
+		if(view instanceof CardView) {
+			Log.d(TAG, "clearAllCards removing remaining card at index 2");
         	group.removeView(view);
 		}
 	}
@@ -159,24 +143,32 @@ public class MainActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 	    super.onSaveInstanceState(outState);
 	    // Store all formatted card strings to be able to restore on configuration change
-	    ArrayList<String> savedStrings = new ArrayList<String>();
+	    ArrayList<String> savedTvrStrings = new ArrayList<String>();
+	    ArrayList<String> savedTsiStrings = new ArrayList<String>();
 	    ViewGroup group = (ViewGroup) findViewById(R.id.now_layout);
 	    for (int i = 0, count = group.getChildCount(); i < count; ++i) {
 	        View view = group.getChildAt(i);
-	        if (view instanceof CardTextView) {
-	            savedStrings.add(((CardTextView)view).getText().toString());
+	        if (view instanceof CardView) {
+	            savedTvrStrings.add(((CardView)view).getTvrView().getText().toString());
+	            savedTsiStrings.add(((CardView)view).getTsiView().getText().toString());
 	        }
 	    }
-	    outState.putStringArrayList("savedCardText", savedStrings);
+	    outState.putStringArrayList("savedTvrText", savedTvrStrings);
+	    outState.putStringArrayList("savedTsiText", savedTsiStrings);
 	}
 	
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		// Retrieve saved strings and add the cards back
-		ArrayList<String> savedStrings = savedInstanceState.getStringArrayList("savedCardText");
-		if(!(savedStrings == null)) {
-	    	for(String text : savedStrings) {
-	    		displayOutput(text);
+		// Retrieve saved strings
+		ArrayList<String> savedTvrStrings = savedInstanceState.getStringArrayList("savedTvrText");
+		ArrayList<String> savedTsiStrings = savedInstanceState.getStringArrayList("savedTsiText");
+		Log.d(TAG, "restored savedTvrStrings size: " + savedTvrStrings.size());
+		Log.d(TAG, "restored savedTsiStrings size: " + savedTsiStrings.size());
+		
+		// Add the cards back
+		if(savedTvrStrings != null && savedTsiStrings != null) {
+	    	for(int i = 0; i < Math.max(savedTvrStrings.size(), savedTsiStrings.size()); i++) {
+	    		displayOutput(savedTvrStrings.get(i), savedTsiStrings.get(i));
 	    	}
 	    }
 		super.onRestoreInstanceState(savedInstanceState);
