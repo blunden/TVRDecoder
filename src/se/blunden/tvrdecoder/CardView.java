@@ -3,7 +3,8 @@ package se.blunden.tvrdecoder;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,10 +36,8 @@ public class CardView extends LinearLayout {
 	@Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        //Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up_left);
-        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(500);
-        anim.setFillAfter(true);
+        
+        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.card_slide_up);
         this.startAnimation(anim);
     }
 	
