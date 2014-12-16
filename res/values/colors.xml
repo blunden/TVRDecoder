@@ -21,4 +21,15 @@
     <color name="local_results_red">#ffe73030</color>
     <color name="search_plate_text_color">#ff777777</color>
     <color name="search_plate_hint_text_color">#ffcccccc</color>
+    
+    <!-- Material colors -->
+    <color name="material_light_blue_300">#ff4fc3f7</color>
+    <color name="material_light_blue_400">#ff29b6f6</color>
+    <color name="material_light_blue_500">#ff03a9f4</color>
+    <color name="material_light_blue_600">#ff039be5</color>
+    <color name="material_light_blue_700">#ff0288d1</color>
+    <color name="material_light_blue_800">#ff0277bd</color>
+    <color name="material_light_blue_900">#ff01579b</color>
+    <color name="material_light_blue_A400">#ff00b0ff</color>
+    <color name="material_light_blue_A700">#ff0091ea</color>
 </resources>

@@ -1,34 +1,34 @@
 package se.blunden.tvrdecoder;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
  * Custom ViewGroup that animates into view when added.
  */
-public class CardView extends LinearLayout {
+public class ResultCardView extends CardView {
 
 	private TextView tvrHeaderView;
 	private TextView tvrView;
 	private TextView tsiHeaderView;
 	private TextView tsiView;
 	
-	public CardView(Context context) {
+	public ResultCardView(Context context) {
 		super(context);
 		initialize(context);
 	}
 	
-	public CardView(Context context, AttributeSet attrs) {
+	public ResultCardView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize(context);
 	}
 	
-	public CardView(Context context, AttributeSet attrs, int defStyle) {
+	public ResultCardView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initialize(context);
 	}
@@ -50,7 +50,6 @@ public class CardView extends LinearLayout {
 	}
 	
 	public void setTvrText(String tvr) {
-		
 		if(tvr.equals("")) {
 			tvrHeaderView.setVisibility(GONE);
 			tvrView.setVisibility(GONE); // Should the view be removed instead?
@@ -85,6 +84,12 @@ public class CardView extends LinearLayout {
 	}
 	
 	private void initialize(Context context) {
+		// Set the content padding
+		setContentPadding(18, 10, 10, 10);
+		
+		// Enable compat padding to use the same padding on Lollipop and older platforms
+		setUseCompatPadding(true);
+		
 		// Inflate the card layout
 		LayoutInflater  mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mInflater.inflate(R.layout.now_card, this, true);

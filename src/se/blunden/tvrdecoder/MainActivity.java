@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import se.blunden.tvrdecoder.R;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 	private static final String TAG = "TVRDecoder";
-	
-	private static final int ABOUT_ID = Menu.FIRST;
-	private static final int CLEAR_ALL_ID = Menu.FIRST + 1;
 	
 	private static String aboutMessage = null;
 	private AlertDialog mAboutDialog;
@@ -71,7 +69,7 @@ public class MainActivity extends Activity {
 		final LinearLayout layout = (LinearLayout) findViewById(R.id.now_layout);
 		
 		// Create the View for the card 
-		final CardView card = new CardView(this);
+		final ResultCardView card = new ResultCardView(this);
 		
 		// Specify layout parameters to be applied
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -129,7 +127,7 @@ public class MainActivity extends Activity {
 			int i;
 			for (i = 0; i < count; i++) {
 				View view = group.getChildAt(i);
-		        if (view instanceof CardView) {
+		        if (view instanceof ResultCardView) {
 		        	group.removeView(view);
 		        	break;
 		        }
@@ -149,9 +147,9 @@ public class MainActivity extends Activity {
 	    ViewGroup group = (ViewGroup) findViewById(R.id.now_layout);
 	    for (int i = 0, count = group.getChildCount(); i < count; ++i) {
 	        View view = group.getChildAt(i);
-	        if (view instanceof CardView) {
-	            savedTvrStrings.add(((CardView)view).getTvrView().getText().toString());
-	            savedTsiStrings.add(((CardView)view).getTsiView().getText().toString());
+	        if (view instanceof ResultCardView) {
+	            savedTvrStrings.add(((ResultCardView)view).getTvrView().getText().toString());
+	            savedTsiStrings.add(((ResultCardView)view).getTsiView().getText().toString());
 	        }
 	    }
 	    outState.putStringArrayList("savedTvrText", savedTvrStrings);
@@ -177,25 +175,27 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		menu.add(0, ABOUT_ID, 0, R.string.menu_about).setIcon(android.R.drawable.ic_menu_info_details).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		menu.add(0, CLEAR_ALL_ID, 0, R.string.menu_clear_all).setIcon(android.R.drawable.ic_menu_close_clear_cancel).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		return true;
+		// Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_activity_actions, menu);
+	    
+	    return super.onCreateOptionsMenu(menu);
 	}
-
+	
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
-		case ABOUT_ID:
+		case R.id.action_about:
 			mAboutDialog.show();
 			return true;
 		
-		case CLEAR_ALL_ID:
-			clearAllCards();
+		case R.id.action_clear_all:
+			// Remove all the cards
+        	clearAllCards();
 			return true;
 		}
 
-		return super.onMenuItemSelected(featureId, item);
+		return super.onOptionsItemSelected(item);
 	}
+
 }
