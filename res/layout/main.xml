@@ -55,7 +55,7 @@
 	            android:id="@+id/input_tsi"
 	            android:background="#00000000"
 	            android:inputType="text"
-	            android:digits="abcdef012345789"
+	            android:digits="abcdef0123456789"
 	            android:maxLength="4"
 	            android:textColor="@color/search_plate_text_color"
 	            android:textSize="16sp"
